@@ -100,8 +100,8 @@ var options = {
     cert: fs.readFileSync('./public.crt')
 };
 
-// https.createServer(options)
-http.createServer()
+https.createServer(options)
+//http.createServer()
     .on('request', request)
     .on('connect', connect)
     .listen(PORT, '0.0.0.0');
