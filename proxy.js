@@ -4,6 +4,8 @@ var fs = require('fs');
 var net = require('net');
 var url = require('url');
 
+var PORT = 55443;
+
 function unauthorized(res, realm) {
   // res.statusCode = 401;
   // res.setHeader('WWW-Authenticate', 'Basic realm="' + realm + '"');
@@ -31,10 +33,20 @@ function checkAuth(req) {
             if (user === 'doudou' && pass === 'welovedoudou') {
                 req.user = req.remoteUser = user;
                 return true;
+            } else {
+                console.log("invalid user/password: " + user + ", " + pass);
             }
         }
     }
     return false;
+}
+
+function log(req, res) {
+    var statusCode = res ? res.statusCode : '';
+    console.log('[' + new Date().toLocaleString() + ']',
+        '"' + req.method + ' ' + req.url + ' http/' + req.httpVersion + '"',
+        statusCode, '-',
+        '"' + req.headers['user-agent'] + '"' || '');
 }
 
 function request(cReq, cRes) {
@@ -44,7 +56,6 @@ function request(cReq, cRes) {
     }
 
     var u = url.parse(cReq.url);
-
     var options = {
         hostname : u.hostname, 
         port     : u.port || 80,
@@ -54,7 +65,7 @@ function request(cReq, cRes) {
     };
 
     var pReq = http.request(options, function(pRes) {
-        console.log('request...');
+        log(cReq, pRes);
         cRes.writeHead(pRes.statusCode, pRes.headers);
         pRes.pipe(cRes);
     }).on('error', function(e) {
@@ -65,7 +76,6 @@ function request(cReq, cRes) {
 }
 
 function connect(cReq, cSock) {
-    console.log(cReq.headers)
     if (!checkAuth(cReq)) {
         cSock.write('HTTP/1.1 407 Proxy Authorization\r\nProxy-Authenticate: Basic realm="Authorization Required"\r\nConnection: close\r\n\r\n');
         cSock.end();
@@ -75,7 +85,7 @@ function connect(cReq, cSock) {
     var u = url.parse('http://' + cReq.url);
 
     var pSock = net.connect(u.port, u.hostname, function() {
-        console.log('connect...');
+        log(cReq);
         cSock.write('HTTP/1.1 200 Connection Established\r\n\r\n');
         pSock.pipe(cSock);
     }).on('error', function(e) {
@@ -90,8 +100,11 @@ var options = {
     cert: fs.readFileSync('./public.crt')
 };
 
-https.createServer(options)
-// http.createServer()
+// https.createServer(options)
+http.createServer()
     .on('request', request)
     .on('connect', connect)
-    .listen(55443, '0.0.0.0');
+    .listen(PORT, '0.0.0.0');
+
+console.log('Listening at 0.0.0.0:' + PORT);
+
