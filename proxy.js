@@ -4,7 +4,8 @@ var fs = require('fs');
 var net = require('net');
 var url = require('url');
 
-var PORT = 55443;
+var HTTPS_PORT = 55443;
+var HTTP_PORT = 55080;
 
 function unauthorized(res, realm) {
   // res.statusCode = 401;
@@ -101,10 +102,15 @@ var options = {
 };
 
 https.createServer(options)
-//http.createServer()
     .on('request', request)
     .on('connect', connect)
-    .listen(PORT, '0.0.0.0');
+    .listen(HTTPS_PORT, '0.0.0.0');
 
-console.log('Listening at 0.0.0.0:' + PORT);
+http.createServer()
+    .on('request', request)
+    .on('connect', connect)
+    .listen(HTTP_PORT, '0.0.0.0');
+
+console.log('Listening at 0.0.0.0:' + HTTPS_PORT);
+console.log('Listening at 0.0.0.0:' + HTTP_PORT);
 
