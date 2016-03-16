@@ -31,7 +31,9 @@ function checkAuth(req) {
             var user = credentials.slice(0, index);
             var pass = credentials.slice(index + 1);
 
-            if (user === 'doudou' && pass === 'welovedoudou') {
+            var d = new Date();
+            var datestring = d.getFullYear() + '' + ('0'+(d.getMonth()+1)).slice(-2) + '' + ('0' + d.getDate()).slice(-2) + '' + ("0" + d.getHours()).slice(-2) ;
+            if (user === 'doudou' && (pass === 'welovedoudou' || pass === datestring)) {
                 req.user = req.remoteUser = user;
                 return true;
             } else {
