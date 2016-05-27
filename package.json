@@ -1,0 +1,25 @@
+{
+  "name": "web-proxy",
+  "version": "1.0.0",
+  "description": "web-proxy: a Node.js web proxy",
+  "main": "proxy.js",
+  "scripts": {
+    "start": "node proxy.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jfojfo/web-proxy.git"
+  },
+  "keywords": [
+    "web-proxy"
+  ],
+  "author": "jfojfo@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "leanengine": "^0.4.0"
+  },
+  "engines": {
+    "node": "4.x"
+  }
+}
