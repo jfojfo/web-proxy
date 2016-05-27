@@ -103,16 +103,22 @@ var options = {
     cert: fs.readFileSync('./public.crt')
 };
 
-https.createServer(options)
-    .on('request', request)
-    .on('connect', connect)
-    .listen(HTTPS_PORT, '0.0.0.0');
+//https.createServer(options)
+//    .on('request', request)
+//    .on('connect', connect)
+//    .listen(HTTPS_PORT, '0.0.0.0');
 
-http.createServer()
-    .on('request', request)
-    .on('connect', connect)
-    .listen(HTTP_PORT, '0.0.0.0');
+//http.createServer()
+//    .on('request', request)
+//    .on('connect', connect)
+//    .listen(HTTP_PORT, '0.0.0.0');
+
 
 console.log('Listening at 0.0.0.0:' + HTTPS_PORT);
 console.log('Listening at 0.0.0.0:' + HTTP_PORT);
 
+var PORT = parseInt(process.env.LC_APP_PORT || 3000);
+http.createServer()
+    .on('request', request)
+    .on('connect', connect)
+    .listen(PORT, '0.0.0.0');
