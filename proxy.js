@@ -64,6 +64,8 @@ function log(req, res) {
 }
 
 function request(cReq, cRes) {
+    log(req, null);
+    console.log(cReq.headers);
     if (!checkAuth(cReq)) {
         unauthorized(cRes, 'Authorization Required');
         return;
