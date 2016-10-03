@@ -98,6 +98,10 @@ function request(cReq, cRes) {
 }
 
 function connect(cReq, cSock) {
+    if (!cReq.headers['user-agent']) {
+        return;
+    }
+
     if (!checkAuth(cReq)) {
         cSock.write('HTTP/1.1 407 Proxy Authorization\r\nProxy-Authenticate: Basic realm="Authorization Required"\r\nConnection: close\r\n\r\n');
         cSock.end();
