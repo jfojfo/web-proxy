@@ -66,6 +66,12 @@ function log(req, res) {
 function request(cReq, cRes) {
     log(cReq, null);
     console.log(cReq.headers);
+
+    if (!req.headers['user-agent']) {
+        cRes.send('ok');
+        return;
+    }
+
     if (!checkAuth(cReq)) {
         unauthorized(cRes, 'Authorization Required');
         return;
