@@ -5,7 +5,8 @@ var net = require('net');
 var url = require('url');
 
 var HTTPS_PORT = 55443;
-var HTTP_PORT = 55080;
+//var HTTP_PORT = 55080;
+var HTTP_PORT = process.env.LC_APP_PORT || 55080;
 
 function unauthorized(res, realm) {
   // res.statusCode = 401;
@@ -103,10 +104,10 @@ var options = {
     cert: fs.readFileSync('./public.crt')
 };
 
-https.createServer(options)
-    .on('request', request)
-    .on('connect', connect)
-    .listen(HTTPS_PORT, '0.0.0.0');
+//https.createServer(options)
+//    .on('request', request)
+//    .on('connect', connect)
+//    .listen(HTTPS_PORT, '0.0.0.0');
 
 http.createServer()
     .on('request', request)
