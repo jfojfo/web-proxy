@@ -122,7 +122,7 @@ function connect(cReq, cSock) {
 http.createServer(app)
     .on('request', request)
     .on('connect', connect)
-    .listen(HTTP_PORT, '0.0.0.0');
+    .listen(HTTP_PORT);
 
 console.log('Listening at 0.0.0.0:' + HTTPS_PORT);
 console.log('Listening at 0.0.0.0:' + HTTP_PORT);
