@@ -99,10 +99,10 @@ function connect(cReq, cSock) {
     cSock.pipe(pSock);
 }
 
-var options = {
-    key: fs.readFileSync('./private.pem'),
-    cert: fs.readFileSync('./public.crt')
-};
+//var options = {
+//    key: fs.readFileSync('./private.pem'),
+//    cert: fs.readFileSync('./public.crt')
+//};
 
 //https.createServer(options)
 //    .on('request', request)
