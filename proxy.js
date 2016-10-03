@@ -10,6 +10,8 @@ var APP_KEY = process.env.LC_APP_KEY;
 var MASTER_KEY = process.env.LC_APP_MASTER_KEY;
 var AV = require('leanengine');
 AV.initialize(APP_ID, APP_KEY, MASTER_KEY);
+var app = require('express')();
+app.use(AV.Cloud);
 
 
 var HTTPS_PORT = 55443;
@@ -117,7 +119,7 @@ function connect(cReq, cSock) {
 //    .on('connect', connect)
 //    .listen(HTTPS_PORT, '0.0.0.0');
 
-http.createServer()
+http.createServer(app)
     .on('request', request)
     .on('connect', connect)
     .listen(HTTP_PORT, '0.0.0.0');
