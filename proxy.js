@@ -4,6 +4,14 @@ var fs = require('fs');
 var net = require('net');
 var url = require('url');
 
+
+var APP_ID = process.env.LC_APP_ID;
+var APP_KEY = process.env.LC_APP_KEY;
+var MASTER_KEY = process.env.LC_APP_MASTER_KEY;
+var AV = require('leanengine');
+AV.initialize(APP_ID, APP_KEY, MASTER_KEY);
+
+
 var HTTPS_PORT = 55443;
 //var HTTP_PORT = 55080;
 var HTTP_PORT = process.env.LC_APP_PORT || 55080;
