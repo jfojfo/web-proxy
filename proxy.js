@@ -68,7 +68,7 @@ function request(cReq, cRes) {
     console.log(cReq.headers);
 
     if (!cReq.headers['user-agent']) {
-        cRes.send('ok');
+//        cRes.send('ok');
         return;
     }
 
